@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from  . import models
 from .forms import VentaForm,LoginForm
-from .models import Producto
+from .models import Producto, Tienda
 
 def index(request):
     response = requests.get('https://mindicador.cl/api')
@@ -27,7 +27,10 @@ def registroVenta(request):
         form = VentaForm()
     return render(request, 'registroVenta.html', {'form': form})
 
-def display(request):
-
+def producto(request):
     productos = Producto.objects.all()
-    return render(request, 'display.html', {'productos': productos})
+    return render(request, 'producto.html', {'productos': productos})
+
+def tienda(request):
+    tiendas = Tienda.objects.all()
+    return render(request, 'tienda.html', {'tiendas': tiendas})
