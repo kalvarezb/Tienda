@@ -8,6 +8,9 @@ class Vendedor(models.Model):
     rut = models.CharField(max_length=12)
     Tienda = models.ForeignKey('AppTienda.Tienda', on_delete=models.CASCADE, default='1')
 
+    def __str__(self):
+        return self.nombre
+
 class Venta(models.Model):
     vendedor = models.ForeignKey('AppTienda.Vendedor', on_delete=models.CASCADE)
     producto = models.ForeignKey('AppTienda.Producto', on_delete=models.CASCADE)
@@ -21,6 +24,9 @@ class Oferta(models.Model):
     precio = models.IntegerField(max_length=10)
     descuento = models.IntegerField()
 
+    def __str__(self):
+        return self.producto +' - '+ self.descuento+'%'
+
 class Tienda(models.Model):
     nombre = models.CharField(max_length=200)
     direccion = models.CharField(max_length=200)
@@ -30,9 +36,15 @@ class Tienda(models.Model):
     correoElectronico = models.CharField(max_length=100)
     encargado = models.ForeignKey('AppTienda.Vendedor', on_delete=models.CASCADE, blank=True, null=True, default=1)
 
+    def __str__(self):
+        return self.nombre
+
 class Producto (models.Model):
     nombre = models.CharField(max_length=200)
     precio = models.IntegerField()
     descripcion = models.TextField()
     tipo = models.CharField(max_length=200, default='a')
     Tienda = models.ManyToManyField('AppTienda.Tienda')
+
+    def __str__(self):
+        return self.nombre
